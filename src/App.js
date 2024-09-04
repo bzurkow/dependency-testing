@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import { useMemo, useState } from 'react';
+import ChildComponent from './ChildComponent';
 
 function App() {
+  const [buttonClickCount, setButtonClickCount] = useState(0);
+  
+  const number = 2
+  const string = 'def'
+  const arrayOfNumbers = [4, 5, 6]
+  const memoizedArrayOfNumbers = useMemo(() => [4, 5, 6], [])
+  const [stateArrayOfNumbers] = useState([4, 5, 6])
+  const objectWithCount = {count: buttonClickCount}
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Dependency Testing</h1>
+      <button onClick={() => setButtonClickCount(buttonClickCount + 1)}>Click me</button>
+      <ChildComponent
+        clickCount={buttonClickCount}
+        propNumber={number}
+        propString={string}
+        propArrayOfNumbers={arrayOfNumbers}
+        propStateArrayOfNumbers={stateArrayOfNumbers}
+        propMemoizedArrayOfNumbers={memoizedArrayOfNumbers}
+        propObjectWithCount={objectWithCount}
+        propSimpleObject={{a: 1}}
+        />
     </div>
   );
 }
